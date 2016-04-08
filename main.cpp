@@ -6,7 +6,7 @@
 
 #ifdef _LINUX
     #define LIBRARY(M) QUOTEME(lib/linux/M)
-#elif defined(WINDOWS)
+#elif defined(_WINDOWS)
     #define LIBRARY(M) QUOTEME(lib\windows\M)
 #else
     #error Error resolving import paths; your operating system is unknown.
@@ -21,4 +21,3 @@ int main()
     std::cout << "Hello, world!\n";
     return 1;
 }
-

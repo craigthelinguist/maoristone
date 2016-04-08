@@ -4,7 +4,7 @@ CC=g++
 WARNINGS=-std=c++11 -pedantic -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Woverloaded-virtual -Wredundant-decls -Wall -Wundef -Werror -Wcast-align -Wpointer-arith -Winit-self
 
 # Additional compilation flags.
-FLAGS= 
+FLAGS=
 
 # Figure out operating system we should be building for.
 ifeq ($(OS), Windows_NT)
@@ -15,7 +15,7 @@ else
 	ifeq ($(UNAME_S),Linux)
 		FLAGS += -D _LINUX
 		FLAGS += -D LIB=lib/linux
-	else ifeq ($(UNAME_S),CYGWIN_NT-6.1)
+	else ifeq ($(UNAME_S),CYGWIN_NT)
 		FLAGS += -D _WINDOWS
 		FLAGS += -D LIB=lib/windows
 	else
