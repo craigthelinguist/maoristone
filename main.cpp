@@ -14,7 +14,7 @@
 
 /** Imports. **/
 #include <iostream>
-#include LIBRARY(SDL/SDL.h)
+#include LIBRARY(SDL\SDL.h)
 
 int main()
 {
