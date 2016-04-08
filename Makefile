@@ -15,6 +15,9 @@ else
 	ifeq ($(UNAME_S),Linux)
 		FLAGS += -D _LINUX
 		FLAGS += -D LIB=lib/linux
+	else ifeq ($(UNAME_S),CYGWIN_NT-6.1)
+		FLAGS += -D _WINDOWS
+		FLAGS += -D LIB=lib/windows
 	else
 		$(error Makefile does not support your OS)
 	endif
