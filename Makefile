@@ -8,7 +8,8 @@ FLAGS=
 
 # Figure out operating system we should be building for.
 ifeq ($(OS), Windows_NT)
-	$(error Makefile does not support Windows yet)
+	FLAGS += -D _WINDOWS
+	FLAGS += -D LIB=lib/windows
 else
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Linux)
