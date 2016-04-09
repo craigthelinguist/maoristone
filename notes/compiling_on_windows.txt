@@ -1,0 +1,29 @@
+
+
+-> Download the mingw binaries from the SDL website
+
+
+-> From the appropriate folder (x86, x64 or whatever they are called), do:
+
+
+- copy the contents of 'include' at 'mingw/include/SDL2/'
+
+- copy the contents of 'lib' at 'mingw/lib'
+
+
+- copy the contents of 'bin' at 'mingw/bin'*
+
+
+Then, you will be able to compile all SDL2 projects by doing the following:
+
+
+#include SDL2 files like this:
+
+
+#include "SDL2/SDL.h"
+
+
+And add the following at the extra linker settings (note the order):
+
+
+-lSDL2_main -lSDL2 
