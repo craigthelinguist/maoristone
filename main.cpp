@@ -16,8 +16,13 @@
 #include <iostream>
 #include LIBRARY(SDL\SDL.h)
 
+using namespace std;
+
 int main(int argc, char** argv)
 {
-    std::cout << "Hello, world!\n";
+    std::cout << "ITSUPGOGOGO!\n";
+
+    cin.get();
+
     return 1;
 }
