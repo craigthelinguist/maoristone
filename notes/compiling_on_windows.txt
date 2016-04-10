@@ -27,3 +27,6 @@ And add the following at the extra linker settings (note the order):
 
 
 -lSDL2_main -lSDL2 
+
+
+useful: https://wiki.libsdl.org/FAQWindows#I_get_.22Undefined_reference_to_.27SDL_main.27.22_...

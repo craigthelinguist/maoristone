@@ -1,5 +1,4 @@
 
-
 /** A mechanism for cleaner imports. **/
 #define QUOTEME(X) QUOTEME_1(X)
 #define QUOTEME_1(X) #X
@@ -12,19 +11,20 @@
     #error Error resolving import paths; your operating system is unknown.
 #endif
 
-/** Imports. **/
-#include <iostream>
 #include LIBRARY(SDL\SDL.h)
-#include "MainGame.h"
 
-int main(int argc, char** argv)
-{
-    MainGame mainGame;
-    mainGame.run();
+class MainGame {
     
-    std::cout << "ITSUPGOGOOG!!";
-    int x;
-    std::cin >> x;
+public:
+    MainGame();
+    ~MainGame();
     
-    return 1;
-}
+    void run();
+    
+    void initSystems();
+    
+private:
+    SDL_Window* _window;
+    int _screenWidth;
+    int _screenHeight;
+};

@@ -1,7 +1,7 @@
 CC=g++
 
 # Warning flags.
-WARNINGS=-std=c++11 -pedantic -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Woverloaded-virtual -Wredundant-decls -Wall -Wundef -Werror -Wcast-align -Wpointer-arith -Winit-self -lmingw32 -lSDL2main -lSDL2
+WARNINGS=-std=c++11 -pedantic -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Woverloaded-virtual -Wredundant-decls -Wall -Wundef -Werror -Wcast-align -Wpointer-arith -Winit-self -lmingw32 -lSDL2main -lSDL2 
 
 # Additional compilation flags.
 FLAGS=
@@ -24,5 +24,5 @@ else
 endif
 
 # Comilation rules.
-maoristone: main.cpp
+maoristone: main.cpp MainGame.h MainGame.cpp
 	$(CC) $(FLAGS) $(WARNINGS) $^ -o $@
