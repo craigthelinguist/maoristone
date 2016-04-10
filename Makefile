@@ -10,6 +10,7 @@ FLAGS=
 ifeq ($(OS), Windows_NT)
 	FLAGS += -D _WINDOWS
 	FLAGS += -D LIB=lib/windows
+    FLAGS += -L/usr/include/SDL2/
 else
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Linux)
@@ -22,6 +23,7 @@ else
 		$(error Makefile does not support your OS)
 	endif
 endif
+
 
 # Comilation rules.
 maoristone: main.cpp MainGame.h MainGame.cpp
