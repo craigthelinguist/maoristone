@@ -1,5 +1,3 @@
-
-
 /** A mechanism for cleaner imports. **/
 #define QUOTEME(X) QUOTEME_1(X)
 #define QUOTEME_1(X) #X
@@ -17,14 +15,12 @@
 #include LIBRARY(SDL\SDL.h)
 #include "MainGame.h"
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
     MainGame mainGame;
     mainGame.run();
     
     std::cout << "ITSUPGOGOOG!!";
-    int x;
-    std::cin >> x;
-    
-    return 1;
+    system("pause");
+
+    return 0;
 }

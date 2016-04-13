@@ -17,6 +17,6 @@ void MainGame::run() {
 
 void MainGame::initSystems() {
     SDL_Init(SDL_INIT_EVERYTHING); //initialize everything from SDL
-    
-    _window = SDL_CreateWindow("maoristone", 0,0, _screenWidth, _screenHeight, SDL_WINDOW_OPENGL); 
+
+    _window = SDL_CreateWindow("maoristone", SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight, SDL_WINDOW_OPENGL); 
 }

@@ -33,3 +33,5 @@ useful links:
 https://wiki.libsdl.org/FAQWindows#I_get_.22Undefined_reference_to_.27SDL_main.27.22_...
 https://www.caveofprogramming.com/c-for-complete-beginners/setting-up-sdl-windows.html
 https://w3.cs.jmu.edu/bernstdh/Web/common/help/cpp_mingw-sdl-setup.php
+
+http://lazyfoo.net/tutorials/SDL/01_hello_SDL/windows/mingw/index.php

@@ -1,4 +1,3 @@
-
 /** A mechanism for cleaner imports. **/
 #define QUOTEME(X) QUOTEME_1(X)
 #define QUOTEME_1(X) #X
@@ -11,7 +10,9 @@
     #error Error resolving import paths; your operating system is unknown.
 #endif
 
+
 #include LIBRARY(SDL\SDL.h)
+
 
 class MainGame {
     
