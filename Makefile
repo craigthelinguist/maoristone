@@ -1,7 +1,9 @@
 CC=g++
 
+STD=-std=c++11
+
 # Warning flags.
-WARNINGS=-std=c++11 Main.cpp MainGame.cpp -pedantic -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Woverloaded-virtual -Wredundant-decls -Wall -Wundef -Werror -Wcast-align -Wpointer-arith -Winit-self
+WARNINGS=-pedantic -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Woverloaded-virtual -Wredundant-decls -Wall -Wundef -Werror -Wcast-align -Wpointer-arith -Winit-self
 
 LINKING= -lSDL2
 
@@ -29,7 +31,8 @@ else
 	endif
 endif
 
+SRC=Main.cpp MainGame.cpp
 
 # Comilation rules.
 maoristone: 
-	$(CC) $(WARNINGS) $(FLAGS) $(LINKING) $^ -o $@
+	$(CC) $(STD) $(SRC) $(WARNINGS) $(FLAGS) $(LINKING) $^ -o $@
