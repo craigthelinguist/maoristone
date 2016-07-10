@@ -1,0 +1,11 @@
+You will need to install the libsdl2 library. This can be done with your operating system's package manager. For Debian-like distros you can do:
+
+sudo apt-get install libsdl2-dev
+
+Otherwise you can manually build the source from this website:
+
+http://www.libsdl.org/download-2.0.php#source
+
+Once installation is complete, you can include the file AN_SDL_FILE.h with the line:
+
+#include <SDL2/AN_SDL_FILE.h>
