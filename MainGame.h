@@ -1,4 +1,6 @@
-/** A mechanism for cleaner imports. **/
+
+#ifndef MAINGAME_H
+#define MAINGAME_H
 
 #include "Modules.h"
 #include LIBRARY(SDL.h)
@@ -19,3 +21,5 @@ private:
     int _screenWidth;
     int _screenHeight;
 };
+
+#endif
