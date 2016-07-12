@@ -1,6 +1,11 @@
 
 #include "Minions.h"
 
+bool operator== (Minion m1, Minion m2)
+{
+    return &m1 == &m2;
+}
+
 bool Minion::isDead ()
 {
     return this->currentHealth < this->stats->maxHealth;

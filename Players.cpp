@@ -45,6 +45,30 @@ bool Player::isDead ()
     return this->currentHealth <= 0;
 }
 
+bool Player::playMinion (Minion minion2play, int position)
+{
+    
+    // If there's no space on the field you can't play the minion.
+    if (this->field.count(position) != 0) return false;
+    
+    // Check if you have the minion in your hand.
+    int indexOfMinion = -1;
+    for (std::vector<Minion>::size_type i= 0; i != this->hand.size(); i++) {
+	if (this->hand[i] == minion2play) {
+	    indexOfMinion = i;
+	    break;
+	}
+    }
+    
+    // If you don't have the minion then you can't play it.
+    if (!indexOfMinion == -1) return false;
+    
+    // Put the minion into play & take it out of your hand.
+    this->field[position] = minion2play;
+    this->hand.erase(this->hand.begin() + indexOfMinion);
+    
+}
+
 int main (int argc, char ** argv){
     return 0;
     

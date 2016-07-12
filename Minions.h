@@ -7,7 +7,20 @@
 class Minion {
  
 public:
+    
+    /*
+     * This is reference equality, not value equailty.
+     */
+    friend bool operator== (Minion m1, Minion m2);
+    
+    /*
+     * True if the minion has no health left.
+     */
     bool isDead ();
+    
+    /*
+     * Damage the minion by a specified amount.
+     */
     void damage (int amount);
     
 private:

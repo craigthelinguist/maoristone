@@ -3,7 +3,9 @@
 #define PLAYERS_H
 
 #include <algorithm>
+#include <map>
 #include <queue>
+#include <vector>
 
 #include "Minions.h"
 
@@ -40,6 +42,12 @@ public:
      * True if the player has no cards left in their deck.
      */
     bool outOfCards ();
+   
+    /*
+     * Play the specified minion at the position. Does nothing if this player isn't holding that exact Minion, or if their
+     * field is full.
+     */
+    bool playMinion (Minion m, int position);
     
 private:
     int amountOverdrawn;
@@ -48,7 +56,7 @@ private:
     int currentHealth;
     std::queue<Minion> deck;
     std::vector<Minion> hand;
-    
+    std::map<int, Minion> field;
 };
 
 
