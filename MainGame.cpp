@@ -1,4 +1,5 @@
 #include "MainGame.h"
+#include LIBRARY(SDL.h)
 
 MainGame::MainGame(int screenWidth, int screenHeight) {
     _window = nullptr;
@@ -24,6 +25,8 @@ void MainGame::init() {
     SDL_UpdateWindowSurface(_window);
     SDL_Delay(600);
 
+
+    run();
     // 1280 x 720
 
     /*
@@ -33,6 +36,18 @@ void MainGame::init() {
     */
 }
 
-
+// Main Game Loop
 void MainGame::run() {
+  SDL_Event event;
+  bool run = true;
+
+  while (run) {
+    if (SDL_PollEvent(&event)) {
+      if (event.type == SDL_QUIT) {
+        run = false;
+      }
+    }
+  }
+
+  SDL_QUIT();
 }
