@@ -40,6 +40,7 @@ int APIENTRY WinMain(HINSTANCE hInstance,
     // Set up the game.
     MainGame game(1280, 720);
     game.init();
-
+    game.run();
+    
     return 0;
 }

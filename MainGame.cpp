@@ -26,7 +26,6 @@ void MainGame::init() {
     SDL_Delay(600);
 
 
-    run();
     // 1280 x 720
 
     /*
