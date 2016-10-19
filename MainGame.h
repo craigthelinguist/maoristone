@@ -7,17 +7,20 @@
 
 
 class MainGame {
-    
+
 public:
-    MainGame();
+    MainGame(int screenWidth, int screenHeight);
     ~MainGame();
-    
+
+    void init();
+
     void run();
-    
+
     void initSystems();
-    
+
 private:
     SDL_Window* _window;
+    SDL_Surface* _surface;
     int _screenWidth;
     int _screenHeight;
 };
