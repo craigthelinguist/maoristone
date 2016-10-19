@@ -18,6 +18,7 @@ public:
 
     void initSystems();
 
+    void Close();
 private:
     SDL_Window* _window;
     SDL_Surface* _surface;

@@ -49,5 +49,11 @@ void MainGame::run() {
     }
   }
 
+  Close();
+}
+
+void MainGame::Close() {
+  SDL_DestroyWindow(_window);
+  SDL_FreeSurface(_surface);
   SDL_QUIT();
 }
