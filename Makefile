@@ -5,7 +5,7 @@ STD=-std=c++11
 # Warning flags.
 WARNINGS=-pedantic -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Woverloaded-virtual -Wredundant-decls -Wall -Wundef -Werror -Wcast-align -Wpointer-arith -Winit-self
 
-LINKING= -lSDL2
+LINKING= -lSDL2 -lws2_32 -lSDL2_image -lSDL2_ttf
 
 # Additional compilation flags.
 FLAGS=
@@ -15,7 +15,7 @@ ifeq ($(OS), Windows_NT)
 	FLAGS += -D _WINDOWS
 	FLAGS += -D LIB=lib/windows
     FLAGS += -w -Wl,-subsystem,windows
-	LINKING += -lmingw32 
+	LINKING += -lmingw32
     FLAGS += -IC:/mingw_dev_lib/include/SDL2
     FLAGS += -LC:/mingw_dev_lib/lib
 else
@@ -31,8 +31,8 @@ else
 	endif
 endif
 
-SRC=Main.cpp MainGame.cpp
+SRC=Main.cpp MainGame.cpp Socket.cpp Address.cpp Text.cpp
 
 # Comilation rules.
-maoristone: 
+maoristone:
 	$(CC) $(STD) $(SRC) $(WARNINGS) $(FLAGS) $(LINKING) $^ -o $@
