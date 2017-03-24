@@ -3,8 +3,7 @@ CC=g++
 STD=-std=c++11
 
 # Warning flags.
-WARNINGS=-pedantic -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Woverloaded-virtual -Wredundant-decls -Wall -Wundef -Werror -Wcast-align -Wpointer-arith -Winit-self
-
+WARNINGS=
 LINKING= -lSDL2 -lws2_32 -lSDL2_image -lSDL2_ttf
 
 # Additional compilation flags.
@@ -15,9 +14,8 @@ ifeq ($(OS), Windows_NT)
 	FLAGS += -D _WINDOWS
 	FLAGS += -D LIB=lib/windows
     FLAGS += -w -Wl,-subsystem,windows
-	LINKING += -lmingw32
-    FLAGS += -IC:/mingw_dev_lib/include/SDL2
-    FLAGS += -LC:/mingw_dev_lib/lib
+    FLAGS += -IC:/MinGW/include/SDL2
+    FLAGS += -LC:/MinGW/lib
 else
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Linux)
