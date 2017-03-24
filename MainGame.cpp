@@ -174,7 +174,8 @@ void MainGame::run() {
   InitializeSockets();
   CreateSocket();
 
-  SendPacket(data, sizeof(data));
+  const char connect[256] = "connect";
+  SendPacket(connect, sizeof(data));
 
   while (run) {
 
