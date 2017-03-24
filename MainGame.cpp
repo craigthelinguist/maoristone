@@ -89,8 +89,8 @@ void MainGame::drawCard() {
   }
 
   SDL_Rect rect;
-  rect.w = 186;
-  rect.h = 255;
+  rect.w = surface -> w;
+  rect.h = surface -> h;
   rect.x = _screenWidth/2;
   rect.y = _screenHeight/2;
 
