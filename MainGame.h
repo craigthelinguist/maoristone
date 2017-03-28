@@ -23,7 +23,7 @@ public:
 
     void drawCard();
     void drawText();
-  
+
     void pollEvents(SDL_Event event);
 
     /* Networking related functions */

@@ -132,18 +132,27 @@ void MainGame::SendPacket(const char data[], const int len) {
 }
 
 void MainGame::ReceivePacket() {
-  while(true) {
+  //while(true) {
     Address sender;
-    unsigned char buffer[256];
-    int bytes_read = sock.Receive(sender, buffer, sizeof(buffer));
+    int bufferLength;
+
+    sock.Receive(sender, (char*)&bufferLength, sizeof(int)); // get buffer length and store it in bufferLength
+    char * buffer = new char[bufferLength];
+    int bytes_read = sock.Receive(sender, buffer, bufferLength);
 
     if (bytes_read <= 0) {
-      continue;
+      // continue;
+      return;
     }
 
     const char* packet_data = (const char*) buffer;
-    printf("%d: %s\n", bytes_read, packet_data);
-  }
+
+    if (strcmp(packet_data, "start") == 0) { // if the packet received is to start the game, draw some text
+      drawText(); // temporary event to test receiving packets
+    }
+
+  //}
+  delete[] buffer; // deealloc memory
 }
 
 void MainGame::pollEvents(SDL_Event event) {
@@ -174,10 +183,15 @@ void MainGame::run() {
   InitializeSockets();
   CreateSocket();
 
-  const char connect[256] = "connect";
-  SendPacket(connect, sizeof(data));
+  // const char connect[256] = "connect";
+  std::string connect = "connect";
+  int bufferLength = connect.size(); // find length of the message
+  SendPacket((char*)&bufferLength, sizeof(int)); // pass the length of the buffer
+  SendPacket(connect.c_str(), bufferLength); // send buffer
 
   while (run) {
+
+    //ReceivePacket();
 
     if (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT) { // if closed

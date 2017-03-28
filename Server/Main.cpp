@@ -82,8 +82,12 @@ void ReceivePacket() {
 void FindPlayers() {
   while (!gameCanStart) {
     Address sender;
-    unsigned char buffer[256];
-    int bytes_read = sock.Receive(sender, buffer, sizeof(buffer));
+    // unsigned char buffer[256];
+    int bufferLength;
+
+    int read_buffer_Length = sock.Receive(sender, (char*)&bufferLength, sizeof(int)); // get buffer length and store it in bufferLength
+    char * buffer = new char[bufferLength];
+    int bytes_read = sock.Receive(sender, buffer, bufferLength);
 
     if (bytes_read <= 0) { // if nothing received
       continue;
@@ -91,6 +95,7 @@ void FindPlayers() {
 
     // process the packet
     const char* packet_data = (const char*) buffer;
+
     if (strcmp(packet_data, "connect") == 0) { // if the packet received is to connect, then store the client's address
       players.push_back(sender); // store the address of the client connecting
       printf("%i Connected\n", players.size());
@@ -101,7 +106,19 @@ void FindPlayers() {
       gameCanStart = true;
       printf("2 Players have Connected\n");
 
+      std::string startGame = "start";
+      int bufferLength2 = startGame.size();
+
+      // tell the players that game can begin
+      for(auto const& a: players) {
+        //sock.Send(a, (char*)&bufferLength2, sizeof(int));
+      //  sock.Send(a, startGame.c_str(), bufferLength2);
+        SendPacket((char*)&bufferLength2, sizeof(int));
+        SendPacket(startGame.c_str(), bufferLength2);
+      }
     }
+
+    delete[] buffer; // deallocate the memory
   }
 }
 
