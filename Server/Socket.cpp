@@ -39,7 +39,8 @@ bool Socket::Open(unsigned short port) {
 
     #elif PLATFORM == PLATFORM_WINDOWS
 
-    DWORD nonBlocking = 1;
+    DWORD nonBlocking = 0; // set this to 1 if we want blocking enabled
+    // 29th march:: Temporarily set to blocking
     if (ioctlsocket( handle, FIONBIO, &nonBlocking ) != 0) {
         printf( "failed to set non-blocking\n" );
         return false;
@@ -88,7 +89,7 @@ int Socket::Receive(Address & sender, void * data, int size) {
   socklen_t fromLength = sizeof(from);
 
   int bytes = recvfrom(this->handle, (char*)data, size, 0, (sockaddr*)&from, &fromLength);
-
+  printf("skipped\n");
   unsigned int from_address = ntohl(from.sin_addr.s_addr);
   unsigned int from_port = ntohs(from.sin_port);
 
