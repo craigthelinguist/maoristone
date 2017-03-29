@@ -39,7 +39,7 @@ bool Socket::Open(unsigned short port) {
 
     #elif PLATFORM == PLATFORM_WINDOWS
 
-    DWORD nonBlocking = 0; // set this to 1 if we want blocking enabled
+    DWORD nonBlocking = 0; // set this to 1 if we want blocking disabled - at the moment, 0 means it will block
     // 29th march:: Temporarily set to blocking
     if (ioctlsocket( handle, FIONBIO, &nonBlocking ) != 0) {
         printf( "failed to set non-blocking\n" );

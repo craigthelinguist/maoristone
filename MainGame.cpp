@@ -136,12 +136,13 @@ void MainGame::ReceivePacket() {
     Address sender;
     int bufferLength;
 
-    sock.Receive(sender, (char*)&bufferLength, sizeof(int)); // get buffer length and store it in bufferLength
+    int read_buffer_Length = sock.Receive(sender, (char*)&bufferLength, sizeof(int)); // get buffer length and store it in bufferLength
     char * buffer = new char[bufferLength];
     int bytes_read = sock.Receive(sender, buffer, bufferLength);
 
     if (bytes_read <= 0) {
       // continue;
+      delete[] buffer; // deealloc memory
       return;
     }
 
@@ -191,7 +192,7 @@ void MainGame::run() {
 
   while (run) {
 
-    //ReceivePacket();
+    ReceivePacket();
 
     if (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT) { // if closed

@@ -90,6 +90,7 @@ void FindPlayers() {
     int bytes_read = sock.Receive(sender, buffer, bufferLength);
 
     if (bytes_read <= 0) { // if nothing received
+      delete[] buffer; 
       continue;
     }
 
@@ -111,10 +112,10 @@ void FindPlayers() {
 
       // tell the players that game can begin
       for(auto const& a: players) {
-        //sock.Send(a, (char*)&bufferLength2, sizeof(int));
-      //  sock.Send(a, startGame.c_str(), bufferLength2);
-        SendPacket((char*)&bufferLength2, sizeof(int));
-        SendPacket(startGame.c_str(), bufferLength2);
+        sock.Send(a, (char*)&bufferLength2, sizeof(int));
+        sock.Send(a, startGame.c_str(), bufferLength2);
+        //SendPacket((char*)&bufferLength2, sizeof(int));
+        //SendPacket(startGame.c_str(), bufferLength2);
       }
     }
 
