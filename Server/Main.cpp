@@ -90,7 +90,7 @@ void FindPlayers() {
     int bytes_read = sock.Receive(sender, buffer, bufferLength);
 
     if (bytes_read <= 0) { // if nothing received
-      delete[] buffer; 
+      delete[] buffer;
       continue;
     }
 
@@ -102,7 +102,9 @@ void FindPlayers() {
       printf("%i Connected\n", players.size());
     }
 
-    if (players.size() == 2) { // if we have two players connected, set gameCanStart to true so the game can begin
+    // 29th March:: This should be checking if players.size() == 2 because we want 2 players but because I'm
+    // testing on one pc, I've changed it to 1 for now. TODO:: Change back to 2.
+    if (players.size() == 1) { // if we have two players connected, set gameCanStart to true so the game can begin
       gameManager = new GameManager(players);
       gameCanStart = true;
       printf("2 Players have Connected\n");
@@ -117,6 +119,7 @@ void FindPlayers() {
         //SendPacket((char*)&bufferLength2, sizeof(int));
         //SendPacket(startGame.c_str(), bufferLength2);
       }
+
     }
 
     delete[] buffer; // deallocate the memory
