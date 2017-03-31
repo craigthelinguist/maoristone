@@ -71,8 +71,11 @@ bool Socket::Send(const Address & destination, const void * data, int size) {
 
   int sent_bytes = sendto(handle, (const char*)data, size, 0, (sockaddr*)&address, sizeof(sockaddr_in));
 
-  std::cout << "sending to address: " << destination.GetAddress() << " port: " << destination.GetPort() << std::endl;
-  std::cout << "sent bytes: " << sent_bytes << std::endl;
+  printf("Sending to address %d and port = %d\n", destination.GetAddress(), destination.GetPort());
+  printf("sent bytes: %d\n", sent_bytes);
+
+  //std::cout << "sending to address: " << destination.GetAddress() << " port: " << destination.GetPort() << std::endl;
+  //std::cout << "sent bytes: " << sent_bytes << std::endl;
 
   if (sent_bytes != size) {
     printf("failed to send packet\n");

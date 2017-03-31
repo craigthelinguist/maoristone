@@ -12,6 +12,42 @@
 #include "Address.h"
 #include "Text.h"
 
+
+bool MainGame::ProcessPacket(Packet packetType) {
+  switch (packetType) {
+    case P_ChatMessage:
+    {
+      Address sender;
+      int bufferLength;
+
+      int read_buffer_Length = sock.Receive(sender, (char*)&bufferLength, sizeof(int)); // get buffer length and store it in bufferLength
+      char * buffer = new char[bufferLength];
+      //std::cin.get();
+
+      int bytes_read = sock.Receive(sender, buffer, bufferLength); // print to console and see if the problem is with unreliable ordering
+      // perhaps it crashes when we don't receive the buffer length first
+      if (bytes_read <= 0) {
+        delete[] buffer; // deealloc memory
+        return false;
+      }
+
+      const char* packet_data = (const char*) buffer;
+
+      if (strcmp(packet_data, "start") == 0) { // if the packet received is to start the game, draw some text
+        drawText(); // temporary event to test receiving packets
+      }
+
+      //}
+      delete[] buffer; // deealloc memory
+      break;
+    }
+    default:
+      printf("Unrecognized packet");
+      break;
+  }
+  return true;
+}
+
 MainGame::MainGame(int screenWidth, int screenHeight) {
     _window = nullptr;
     _surface = nullptr;
@@ -133,27 +169,16 @@ void MainGame::SendPacket(const char data[], const int len) {
 
 void MainGame::ReceivePacket() {
   //while(true) {
-    Address sender;
-    int bufferLength;
+  Packet packetType;
+  Address sender;
 
-    int read_buffer_Length = sock.Receive(sender, (char*)&bufferLength, sizeof(int)); // get buffer length and store it in bufferLength
-    char * buffer = new char[bufferLength];
-    int bytes_read = sock.Receive(sender, buffer, bufferLength);
+  int bytes_read = sock.Receive(sender, (char*)&packetType, sizeof(Packet)); // receive packet type
 
-    if (bytes_read <= 0) {
-      // continue;
-      delete[] buffer; // deealloc memory
-      return;
-    }
+  // if we fail to process packet
+  if (!ProcessPacket(packetType)) {
+    printf("didn't process\n");
+  }
 
-    const char* packet_data = (const char*) buffer;
-
-    if (strcmp(packet_data, "start") == 0) { // if the packet received is to start the game, draw some text
-      drawText(); // temporary event to test receiving packets
-    }
-
-  //}
-  delete[] buffer; // deealloc memory
 }
 
 void MainGame::pollEvents(SDL_Event event) {
@@ -187,6 +212,9 @@ void MainGame::run() {
   // const char connect[256] = "connect";
   std::string connect = "connect";
   int bufferLength = connect.size(); // find length of the message
+  Packet packetType = P_ChatMessage; // create packet type
+
+  SendPacket((char*)&packetType, sizeof(Packet)); // pass the length of the buffer
   SendPacket((char*)&bufferLength, sizeof(int)); // pass the length of the buffer
   SendPacket(connect.c_str(), bufferLength); // send buffer
 

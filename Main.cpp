@@ -22,6 +22,11 @@ int APIENTRY WinMain(HINSTANCE hInstance,
                      int       nCmdShow)
 {
 
+  // display console - use this for debugging
+  AllocConsole();
+  freopen("CONIN$", "r",stdin);
+  freopen("CONOUT$", "w",stdout);
+  freopen("CONOUT$", "w",stderr);
 
     // Set up the game.
     MainGame game(1280, 720);

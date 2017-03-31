@@ -9,6 +9,10 @@
 
 class MainGame {
 
+  enum Packet {
+    P_ChatMessage
+  };
+
 public:
     MainGame(int screenWidth, int screenHeight);
     ~MainGame();
@@ -32,6 +36,9 @@ public:
     void CreateSocket();
     void SendPacket(const char data[], const int len);
     void ReceivePacket();
+    bool ProcessPacket(Packet packetType);
+
+
 
 private:
     SDL_Window* _window;
