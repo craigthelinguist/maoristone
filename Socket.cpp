@@ -19,7 +19,7 @@ bool Socket::Open(unsigned short port) {
 
     sockaddr_in address;
     address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_addr.s_addr = INADDR_ANY; // INADDR_ANY to specify local ip
     address.sin_port = htons( (unsigned short) port );
 
     if (bind( this->handle, (const sockaddr*) &address, sizeof(sockaddr_in) ) < 0) {
@@ -39,7 +39,7 @@ bool Socket::Open(unsigned short port) {
 
     #elif PLATFORM == PLATFORM_WINDOWS
 
-    DWORD nonBlocking = 1; // set this to 1 if we want blocking disabled - at the moment, 0 means it will block
+    DWORD nonBlocking = 1; // set this to 1 if we want blocking disabled -- 0 means it will block
     // 29th march:: Temporarily set to blocking
     if (ioctlsocket( handle, FIONBIO, &nonBlocking ) != 0) {
         printf( "failed to set non-blocking\n" );
@@ -90,6 +90,7 @@ int Socket::Receive(Address & sender, void * data, int size) {
   sockaddr_in from;
   socklen_t fromLength = sizeof(from);
 
+  // recvfrom returns -1 on error
   int bytes = recvfrom(this->handle, (char*)data, size, 0, (sockaddr*)&from, &fromLength);
 
   unsigned int from_address = ntohl(from.sin_addr.s_addr);

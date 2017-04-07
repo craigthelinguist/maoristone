@@ -5,48 +5,11 @@
 #include <iostream>
 #include <windows.h>
 #include <stdlib.h>
-#include <string.h>
 #include <tchar.h>
 #include <stdio.h>
 #include "Socket.h"
 #include "Address.h"
 #include "Text.h"
-
-
-bool MainGame::ProcessPacket(Packet packetType) {
-  switch (packetType) {
-    case P_ChatMessage:
-    {
-      Address sender;
-      int bufferLength;
-
-      int read_buffer_Length = sock.Receive(sender, (char*)&bufferLength, sizeof(int)); // get buffer length and store it in bufferLength
-      char * buffer = new char[bufferLength];
-      //std::cin.get();
-
-      int bytes_read = sock.Receive(sender, buffer, bufferLength); // print to console and see if the problem is with unreliable ordering
-      // perhaps it crashes when we don't receive the buffer length first
-      if (bytes_read <= 0) {
-        delete[] buffer; // deealloc memory
-        return false;
-      }
-
-      const char* packet_data = (const char*) buffer;
-
-      if (strcmp(packet_data, "start") == 0) { // if the packet received is to start the game, draw some text
-        drawText(); // temporary event to test receiving packets
-      }
-
-      //}
-      delete[] buffer; // deealloc memory
-      break;
-    }
-    default:
-      printf("Unrecognized packet");
-      break;
-  }
-  return true;
-}
 
 MainGame::MainGame(int screenWidth, int screenHeight) {
     _window = nullptr;
@@ -173,12 +136,81 @@ void MainGame::ReceivePacket() {
   Address sender;
 
   int bytes_read = sock.Receive(sender, (char*)&packetType, sizeof(Packet)); // receive packet type
+    printf("Packet type is %d\n", (int)packetType); //debugging
+    std::cin.get(); //debugging
 
   // if we fail to process packet
   if (!ProcessPacket(packetType)) {
     printf("didn't process\n");
   }
 
+}
+
+bool MainGame::ProcessPacket(Packet packetType) {
+  switch (packetType) {
+    case P_ChatMessage:
+    {
+      Address sender;
+      int bufferLength;
+
+      int read_buffer_Length = sock.Receive(sender, (char*)&bufferLength, sizeof(int)); // get buffer length and store it in bufferLength
+      char * buffer = new char[bufferLength];
+      //std::cin.get();
+      printf("buffer length is %i\n", bufferLength); //debugging
+
+      int bytes_read = sock.Receive(sender, buffer, bufferLength); // print to console and see if the problem is with unreliable ordering
+      // perhaps it crashes when we don't receive the buffer length first
+      std::cout << "buffer is : " << buffer << endl; //debugging
+      if (bytes_read <= 0) {
+        delete[] buffer; // deealloc memory
+        return false;
+      }
+
+      const char* packet_data = (const char*) buffer;
+
+      if (strcmp(packet_data, "start") == 0) { // if the packet received is to start the game, draw some text
+        drawText(); // temporary event to test receiving packets
+      }
+
+      //}
+      delete[] buffer; // deealloc memory
+      break;
+    }
+    default:
+      printf("Unrecognized packet");
+      break;
+  }
+  return true;
+}
+
+bool MainGame::SendInt(int i) {
+  SendPacket((char*)&i, sizeof(int)); // pass the length of the buffer
+  return true;
+}
+
+bool MainGame::ReadInt(int& i) {
+  Address sender;
+  int read_bytes = sock.Receive(sender, (char*)&i, sizeof(int)); // receive the int
+  return true;
+}
+
+bool MainGame::SendString(std::string& s) {
+  Packet packetType = P_ChatMessage; // create packet type
+  SendPacket((char*)&packetType, sizeof(Packet)); // pass the type of packet
+  int bufferLength = s.size(); // find length of the message
+  SendPacket((char*)&bufferLength, sizeof(int)); // pass the length of the buffer
+  SendPacket(s.c_str(), bufferLength); // send message
+}
+
+bool MainGame::ReadString(std::string& s) {
+  Address sender;
+  int bufferLength;
+  ReadInt(bufferLength);
+  char * buffer = new char[bufferLength];
+  int bytes_read = sock.Receive(sender, buffer, bufferLength);
+  s = buffer; // set string to the received string from the buffer
+  delete[] buffer; // deallocate the memory
+  return true;
 }
 
 void MainGame::pollEvents(SDL_Event event) {
@@ -200,7 +232,6 @@ void MainGame::pollEvents(SDL_Event event) {
   }
 }
 
-
 // Main Game Loop
 void MainGame::run() {
   SDL_Event event;
@@ -214,7 +245,7 @@ void MainGame::run() {
   int bufferLength = connect.size(); // find length of the message
   Packet packetType = P_ChatMessage; // create packet type
 
-  SendPacket((char*)&packetType, sizeof(Packet)); // pass the length of the buffer
+  SendPacket((char*)&packetType, sizeof(Packet)); // pass the type of packet
   SendPacket((char*)&bufferLength, sizeof(int)); // pass the length of the buffer
   SendPacket(connect.c_str(), bufferLength); // send buffer
 

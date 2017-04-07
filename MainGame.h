@@ -37,6 +37,10 @@ public:
     void SendPacket(const char data[], const int len);
     void ReceivePacket();
     bool ProcessPacket(Packet packetType);
+    bool SendInt(int i);
+    bool ReadInt(int& i);
+    bool SendString(std::string& s);
+    bool ReadString(std::string& s);
 
 
 

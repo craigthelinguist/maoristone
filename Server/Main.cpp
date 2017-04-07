@@ -149,6 +149,8 @@ void FindPlayers() {
     if (!ProcessPacket(packetType)) {
       return;
     }
+
+    printf("Can game start?  %d\n", gameCanStart);
   }
 }
 
